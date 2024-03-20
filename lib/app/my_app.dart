@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'Timer Flutter',
       theme: AppTheme.ligth,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
       home: const TimerPage(),
     );

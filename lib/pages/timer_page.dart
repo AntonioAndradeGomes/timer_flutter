@@ -12,18 +12,29 @@ class TimerPage extends StatelessWidget {
         ),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             '60',
             style: Theme.of(context).textTheme.displayMedium,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FloatingActionButton(
                 onPressed: () {},
+                child: const Icon(
+                  Icons.play_arrow_rounded,
+                ),
+              ),
+              const SizedBox(
+                width: 20,
               ),
               FloatingActionButton(
                 onPressed: () {},
+                child: const Icon(
+                  Icons.refresh,
+                ),
               ),
             ],
           ),
