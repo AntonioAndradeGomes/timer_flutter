@@ -22,6 +22,9 @@ class TimerPage extends StatelessWidget {
               FloatingActionButton(
                 onPressed: () {},
               ),
+              FloatingActionButton(
+                onPressed: () {},
+              ),
             ],
           ),
         ],
