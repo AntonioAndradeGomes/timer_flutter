@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:timer_flutter/bloc/timer_bloc.dart';
+import 'package:timer_flutter/widgets/actions_buttons_widget.dart';
 
 class TimerPage extends StatelessWidget {
   const TimerPage({super.key});
@@ -11,34 +15,18 @@ class TimerPage extends StatelessWidget {
           'Cronomêtro',
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '60',
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FloatingActionButton(
-                onPressed: () {},
-                child: const Icon(
-                  Icons.play_arrow_rounded,
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              FloatingActionButton(
-                onPressed: () {},
-                child: const Icon(
-                  Icons.refresh,
-                ),
-              ),
-            ],
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "${context.select((TimerBloc bloc) => bloc.state.duration)}",
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+            Gap(20),
+            ActionsButtonsWidget(),
+          ],
+        ),
       ),
     );
   }
