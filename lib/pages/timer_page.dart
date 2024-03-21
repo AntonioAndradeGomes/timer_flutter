@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:timer_flutter/widgets/actions_buttons_widget.dart';
+import 'package:timer_flutter/widgets/timer_text_circular_widget.dart';
 
 class TimerPage extends StatelessWidget {
   const TimerPage({super.key});
@@ -8,26 +11,21 @@ class TimerPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Cronomêtro',
+          'Timer',
         ),
       ),
-      body: Column(
-        children: [
-          Text(
-            '60',
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
-          Row(
+      body: const Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FloatingActionButton(
-                onPressed: () {},
-              ),
-              FloatingActionButton(
-                onPressed: () {},
-              ),
+              TimerTextCircularWidget(),
+              Gap(20),
+              ActionsButtonsWidget(),
+              Gap(20),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
