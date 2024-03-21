@@ -10,19 +10,33 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   static const int _duration = 60;
   StreamSubscription<int>? _tickerSubscription;
 
-  TimerBloc({
-    required Ticker ticker,
-  })  : _ticker = ticker,
+  TimerBloc({required Ticker ticker})
+      : _ticker = ticker,
         super(
           const TimerInitial(
-            duration: _duration,
+            currentDuration: _duration,
+            durationFinal: _duration,
           ),
         ) {
+    on<TimerEdit>(_onEdit);
     on<TimerStarted>(_onStarted);
     on<TimerTicked>(_onTicked);
-    on<TimerPaused>(_onPaused);
     on<TimerResumed>(_onResumed);
+    on<TimerPaused>(_onPaused);
     on<TimerReset>(_onReset);
+  }
+
+  void _onEdit(
+    TimerEdit event,
+    Emitter<TimerState> emit,
+  ) {
+    _tickerSubscription?.cancel();
+    emit(
+      TimerInitial(
+        durationFinal: event.duration,
+        currentDuration: event.duration,
+      ),
+    );
   }
 
   void _onStarted(
@@ -32,7 +46,8 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     _tickerSubscription?.cancel();
     emit(
       TimerRunInProgress(
-        duration: event.duration,
+        durationFinal: event.duration,
+        currentDuration: event.duration,
       ),
     );
     _tickerSubscription = _ticker
@@ -48,55 +63,61 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
         );
   }
 
-  FutureOr<void> _onTicked(
+  void _onTicked(
     TimerTicked event,
     Emitter<TimerState> emit,
   ) {
     if (event.duration > 0) {
       emit(
         TimerRunInProgress(
-          duration: event.duration,
+          currentDuration: event.duration,
+          durationFinal: state.durationFinal,
         ),
       );
     } else {
       emit(
-        const TimerRunComplete(),
+        TimerRunComplete(
+          durationFinal: state.durationFinal,
+        ),
       );
     }
   }
 
-  FutureOr<void> _onResumed(
+  void _onResumed(
     TimerResumed event,
     Emitter<TimerState> emit,
   ) {
     _tickerSubscription?.resume();
     emit(
       TimerRunInProgress(
-        duration: state.duration,
+        currentDuration: state.currentDuration,
+        durationFinal: state.durationFinal,
       ),
     );
   }
 
-  FutureOr<void> _onPaused(
+  void _onPaused(
     TimerPaused event,
     Emitter<TimerState> emit,
   ) {
     _tickerSubscription?.pause();
     emit(
       TimerRunPause(
-        duration: state.duration,
+        currentDuration: state.currentDuration,
+        durationFinal: state.durationFinal,
       ),
     );
   }
 
-  FutureOr<void> _onReset(
+  void _onReset(
     TimerReset event,
     Emitter<TimerState> emit,
   ) {
     _tickerSubscription?.cancel();
     emit(
-      const TimerInitial(
-        duration: _duration,
+      TimerInitial(
+        durationFinal: state.durationFinal,
+        currentDuration: state.durationFinal,
       ),
     );
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -12,10 +10,21 @@ class ActionsButtonsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TimerBloc, TimerState>(
       builder: (context, state) {
-        log(state.toString());
         if (state is TimerInitial) {
+          final disabled = state.durationFinal == 0;
           return FloatingActionButton(
-            onPressed: () {},
+            onPressed: !disabled
+                ? () {
+                    context.read<TimerBloc>().add(
+                          TimerStarted(
+                            duration: state.currentDuration,
+                          ),
+                        );
+                  }
+                : null,
+            backgroundColor: disabled
+                ? Theme.of(context).colorScheme.primaryContainer.withAlpha(50)
+                : Theme.of(context).colorScheme.primaryContainer,
             child: const Icon(
               Icons.play_arrow_rounded,
             ),
@@ -23,16 +32,25 @@ class ActionsButtonsWidget extends StatelessWidget {
         }
         if (state is TimerRunInProgress) {
           return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<TimerBloc>().add(
+                        TimerPaused(),
+                      );
+                },
                 child: const Icon(
                   Icons.pause_rounded,
                 ),
               ),
               const Gap(20),
               FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<TimerBloc>().add(
+                        TimerReset(),
+                      );
+                },
                 child: const Icon(
                   Icons.replay_rounded,
                 ),
@@ -42,16 +60,25 @@ class ActionsButtonsWidget extends StatelessWidget {
         }
         if (state is TimerRunPause) {
           return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<TimerBloc>().add(
+                        TimerResumed(),
+                      );
+                },
                 child: const Icon(
                   Icons.play_arrow_rounded,
                 ),
               ),
               const Gap(20),
               FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<TimerBloc>().add(
+                        TimerReset(),
+                      );
+                },
                 child: const Icon(
                   Icons.replay_rounded,
                 ),
@@ -61,7 +88,11 @@ class ActionsButtonsWidget extends StatelessWidget {
         }
         if (state is TimerRunComplete) {
           return FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              context.read<TimerBloc>().add(
+                    TimerReset(),
+                  );
+            },
             child: const Icon(
               Icons.replay_rounded,
             ),

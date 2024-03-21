@@ -5,6 +5,19 @@ sealed class TimerEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class TimerEdit extends TimerEvent {
+  final int duration;
+
+  TimerEdit({
+    required this.duration,
+  });
+
+  @override
+  List<Object?> get props => [
+        duration,
+      ];
+}
+
 class TimerStarted extends TimerEvent {
   final int duration;
 

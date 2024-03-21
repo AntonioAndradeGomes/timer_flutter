@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Timer Flutter',
       theme: AppTheme.ligth,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
       home: BlocProvider<TimerBloc>(
         create: (context) => TimerBloc(

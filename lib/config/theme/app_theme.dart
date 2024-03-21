@@ -24,6 +24,7 @@ abstract class AppTheme {
       focusElevation: 0,
       hoverElevation: 0,
       highlightElevation: 0,
+      disabledElevation: 0,
     ),
   );
   static final darkTheme = FlexThemeData.dark(
@@ -46,6 +47,7 @@ abstract class AppTheme {
       focusElevation: 0,
       hoverElevation: 0,
       highlightElevation: 0,
+      disabledElevation: 0,
     ),
   );
 }
