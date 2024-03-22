@@ -13,6 +13,7 @@ class ActionsButtonsWidget extends StatelessWidget {
         if (state is TimerInitial) {
           final disabled = state.durationFinal == 0;
           return FloatingActionButton(
+            tooltip: "Iniciar Timer",
             onPressed: !disabled
                 ? () {
                     context.read<TimerBloc>().add(
@@ -33,8 +34,10 @@ class ActionsButtonsWidget extends StatelessWidget {
         if (state is TimerRunInProgress) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               FloatingActionButton(
+                tooltip: "Pausar Timer",
                 onPressed: () {
                   context.read<TimerBloc>().add(
                         TimerPaused(),
@@ -46,13 +49,14 @@ class ActionsButtonsWidget extends StatelessWidget {
               ),
               const Gap(20),
               FloatingActionButton(
+                tooltip: "Cancelar Timer",
                 onPressed: () {
                   context.read<TimerBloc>().add(
                         TimerReset(),
                       );
                 },
                 child: const Icon(
-                  Icons.replay_rounded,
+                  Icons.stop_rounded,
                 ),
               ),
             ],
@@ -61,8 +65,10 @@ class ActionsButtonsWidget extends StatelessWidget {
         if (state is TimerRunPause) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               FloatingActionButton(
+                tooltip: "Continuar Timer",
                 onPressed: () {
                   context.read<TimerBloc>().add(
                         TimerResumed(),
@@ -74,28 +80,60 @@ class ActionsButtonsWidget extends StatelessWidget {
               ),
               const Gap(20),
               FloatingActionButton(
+                tooltip: "Reiniciar Timer",
+                onPressed: () {
+                  context.read<TimerBloc>().add(
+                        TimerRestart(),
+                      );
+                },
+                child: const Icon(
+                  Icons.restart_alt_rounded,
+                ),
+              ),
+              const Gap(20),
+              FloatingActionButton(
+                tooltip: "Cancelar Timer",
                 onPressed: () {
                   context.read<TimerBloc>().add(
                         TimerReset(),
                       );
                 },
                 child: const Icon(
-                  Icons.replay_rounded,
+                  Icons.stop_rounded,
                 ),
               ),
             ],
           );
         }
         if (state is TimerRunComplete) {
-          return FloatingActionButton(
-            onPressed: () {
-              context.read<TimerBloc>().add(
-                    TimerReset(),
-                  );
-            },
-            child: const Icon(
-              Icons.replay_rounded,
-            ),
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FloatingActionButton(
+                tooltip: "Reiniciar Timer",
+                onPressed: () {
+                  context.read<TimerBloc>().add(
+                        TimerRestart(),
+                      );
+                },
+                child: const Icon(
+                  Icons.restart_alt_rounded,
+                ),
+              ),
+              const Gap(20),
+              FloatingActionButton(
+                tooltip: "Cancelar Timer",
+                onPressed: () {
+                  context.read<TimerBloc>().add(
+                        TimerReset(),
+                      );
+                },
+                child: const Icon(
+                  Icons.stop_rounded,
+                ),
+              ),
+            ],
           );
         }
 
