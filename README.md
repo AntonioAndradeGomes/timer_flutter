@@ -11,6 +11,27 @@ Aplicativo feito com [Flutter](https://flutter.dev/), que tem como funcionamento
 - [gap](https://pub.dev/packages/gap)
 - [auto_size_text](https://pub.dev/packages/auto_size_text)
 
+## Como Usar
+
+```shell
+- Primeiramente, configure corretamente o ambiente de desenvolvimento Flutter em sua máquina, consulte https://flutter.dev/docs/get-started/install
+
+- Clone este repositório
+$ git clone git@github.com:AntonioAndradeGomes/timer_flutter.git
+
+- Entre no diretório
+$ cd teste_sciencedex
+
+- Instale as dependências
+$ flutter pub get
+
+- Execute um emulador ou conecte a um dispositivo físico, a documentação do Flutter explica como faz a parte do dispositivo físico
+
+- Execute o aplicativo
+$ flutter run
+```
+
+
 ## Imagens do projeto
 
 1. Estado inicial
