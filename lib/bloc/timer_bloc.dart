@@ -24,6 +24,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     on<TimerResumed>(_onResumed);
     on<TimerPaused>(_onPaused);
     on<TimerReset>(_onReset);
+    on<TimerRestart>(_onRestart);
   }
 
   void _onEdit(
@@ -126,5 +127,17 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Future<void> close() async {
     _tickerSubscription?.cancel();
     super.close();
+  }
+
+  void _onRestart(
+    TimerRestart event,
+    Emitter<TimerState> emit,
+  ) {
+    _onStarted(
+      TimerStarted(
+        duration: state.durationFinal,
+      ),
+      emit,
+    );
   }
 }
